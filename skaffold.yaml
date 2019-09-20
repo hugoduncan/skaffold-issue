@@ -1,0 +1,23 @@
+apiVersion: skaffold/v1beta14
+kind: Config
+metadata:
+  name: myproj
+build:
+  local:
+    push: false
+
+  artifacts:
+  - image: image
+    context: .
+    docker:
+      dockerfile: Dockerfile
+
+
+deploy:
+  helm:
+    releases:
+      - name: myrel
+        namespace: default
+        chartPath: mychart
+        values:
+          image.repository: image
